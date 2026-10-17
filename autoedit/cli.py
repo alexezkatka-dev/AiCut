@@ -68,5 +68,75 @@ def preview(plan_path: Path = typer.Argument(..., help="edit_plan.json"),
     typer.echo(f"Превью: {out}")
 
 
+def _index_settings(cfg: Config):
+    from autoedit.index.indexer import IndexSettings
+
+    return IndexSettings(cfg.models.clip, cfg.models.clip_pretrained, cfg.index.sample_every_sec,
+                         cfg.index.sample_width, cfg.index.motion_min, cfg.index.shake)
+
+
+def _load_embedder(cfg: Config):
+    from autoedit.index.embed import Embedder
+
+    typer.echo("Загружаю нейросеть SigLIP (первый раз она скачивается, ~800 МБ)...")
+    emb = Embedder(cfg.models.clip, cfg.models.clip_pretrained, cfg.models.clip_device)
+    typer.echo(f"Считаю на: {emb.device_name}")
+    return emb
+
+
+@app.command()
+def index(folder: Path = typer.Argument(..., help="папка с дублями"),
+          project: str = typer.Option(..., help="имя проекта: индекс будет в work/<проект>/media_index.db")) -> None:
+    """Проиндексировать дубли: кадры, смысл картинки, резкость, движение, рабочие участки."""
+    import time
+
+    from autoedit.index.indexer import index_folder, list_videos
+
+    if not folder.is_dir():
+        raise _fail(f"Нет папки с дублями: {folder}")
+    if not list_videos(folder):
+        raise _fail(f"В папке {folder} нет видео (.mov, .mp4).")
+    cfg = load_config()
+    t0 = time.monotonic()
+    db_path = cfg.work_dir() / project / "media_index.db"
+    stats = index_folder(folder, db_path, _index_settings(cfg), lambda: _load_embedder(cfg), typer.echo)
+    typer.echo(f"Готово за {time.monotonic() - t0:.1f} с: новых {stats.indexed}, без изменений {stats.skipped}, "
+               f"убрано {stats.removed}. Индекс: {db_path}")
+
+
+@app.command()
+def search(query: str = typer.Argument(None, help="что ищем, по-английски; без запроса - спрашивать по очереди"),
+           project: str = typer.Option(..., help="имя проекта"),
+           top: int = typer.Option(5, help="сколько дублей показать"),
+           open_report: bool = typer.Option(True, "--open/--no-open", help="открыть отчёт в браузере")) -> None:
+    """Найти дубли по описанию кадра."""
+    import webbrowser
+
+    from autoedit.index import db
+    from autoedit.search import fmt_time, search as run_search, write_report
+
+    cfg = load_config()
+    db_path = cfg.work_dir() / project / "media_index.db"
+    if not db_path.is_file():
+        raise _fail(f"Нет индекса {db_path}. Сначала запусти индексацию.")
+    emb = _load_embedder(cfg)
+    conn = db.connect(db_path)
+    try:
+        while True:
+            q = query or input("\nЗапрос по-английски (пустая строка - выход): ").strip()
+            if not q:
+                break
+            hits = run_search(conn, emb.text(q), top)
+            for n, h in enumerate(hits, 1):
+                typer.echo(f"  {n}. {h.path.name}  момент {fmt_time(h.time)}  сходство {h.score:.3f}")
+            report = write_report(q, hits, db_path.parent / "search.html")
+            if open_report:
+                webbrowser.open(report.resolve().as_uri())
+            if query:
+                break
+    finally:
+        conn.close()
+
+
 if __name__ == "__main__":
     app()

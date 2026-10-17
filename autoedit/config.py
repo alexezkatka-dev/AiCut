@@ -31,10 +31,25 @@ class PreviewCfg(_Section):
     height: int = Field(540, gt=0)
 
 
+class ModelsCfg(_Section):
+    clip: str = "ViT-B-16-SigLIP"  # open_clip model name
+    clip_pretrained: str = "webli"
+    clip_device: str = "auto"  # auto | cpu | cuda
+
+
+class IndexCfg(_Section):
+    sample_every_sec: float = Field(0.5, gt=0)
+    sample_width: int = Field(384, gt=0)
+    motion_min: float = Field(0.01, ge=0)  # mean frame change 0..1 that counts as action
+    shake: float = Field(0.15, gt=0)  # above this the whole frame moves: hand on the phone
+
+
 class Config(_Section):
     capcut: CapCutCfg = Field(default_factory=CapCutCfg)
     paths: PathsCfg = Field(default_factory=PathsCfg)
     preview: PreviewCfg = Field(default_factory=PreviewCfg)
+    models: ModelsCfg = Field(default_factory=ModelsCfg)
+    index: IndexCfg = Field(default_factory=IndexCfg)
     profile: str = "food_long"
 
     def drafts_dir(self) -> Path | None:

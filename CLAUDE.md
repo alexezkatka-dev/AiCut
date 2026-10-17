@@ -35,3 +35,4 @@ Local Windows tool that turns raw phone footage + a voiceover script (mode A) or
 - Run UI: `run.bat` → Gradio on http://127.0.0.1:7860.
 - CLI: `python -m autoedit.cli <command>` (`index`, `plan-vo`, `plan-ref`, `match`, `build`, `preview`, `all`).
 - Tests: `.venv\Scripts\python -m pytest -q`.
+- Stage checks: `stage0.bat` (CapCut smoke draft), `example.bat` (example plan → draft + preview), `index.bat` / `search.bat` (indexer).

@@ -77,6 +77,8 @@ config.example.yaml → config.yaml, Pydantic-модели плана (autoedit/
 Сначала план.
 ```
 
+Запуск: `git pull`, `install.bat`, `index.bat`, затем `search.bat` (спрашивает запросы по очереди).
+
 **Что проверить.** Придумай 10 запросов на английском («hand cutting potato», «oil in pan» и т. п.). Нужный дубль должен быть в первой тройке хотя бы в 8 случаях из 10.
 
 ---

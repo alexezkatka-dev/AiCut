@@ -18,10 +18,13 @@ models:
   whisper_device: "auto"     # auto | cpu | cuda
   clip: "ViT-B-16-SigLIP"    # open_clip model name
   clip_pretrained: "webli"
+  clip_device: "auto"        # auto | cpu | cuda
 
 index:
   sample_every_sec: 0.5
   sample_width: 384
+  motion_min: 0.01           # mean frame change (0..1) that counts as action
+  shake: 0.15                # above this the whole frame moves: hand on the phone
 
 matcher:
   weights: {similarity: 0.55, order: 0.20, quality: 0.15, duration: 0.10}
