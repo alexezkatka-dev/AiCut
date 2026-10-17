@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "project": {
+    "name": "chicken_10min",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "profile": "food_long"
+  },
+  "video": [
+    {
+      "slot_id": "K01",
+      "role": "hook",
+      "source": "footage/IMG_4821.MOV",
+      "src_in": 12.40,
+      "src_out": 15.24,
+      "start": 0.00,
+      "duration": 2.84,
+      "speed": 1.0,
+      "zoom_from": 1.00,
+      "zoom_to": 1.12,
+      "confidence": 0.71,
+      "needs_review": false,
+      "alternatives": [
+        {"source": "footage/IMG_4822.MOV", "src_in": 3.10, "score": 0.64},
+        {"source": "footage/IMG_4840.MOV", "src_in": 0.80, "score": 0.52}
+      ]
+    },
+    {
+      "slot_id": "K02",
+      "role": "problem",
+      "source": "footage/IMG_4825.MOV",
+      "src_in": 4.00,
+      "src_out": 8.10,
+      "start": 2.84,
+      "duration": 4.10,
+      "speed": 1.0,
+      "zoom_from": 1.00,
+      "zoom_to": 1.06,
+      "confidence": 0.33,
+      "needs_review": true,
+      "alternatives": [
+        {"source": "footage/IMG_4826.MOV", "src_in": 1.20, "score": 0.31}
+      ]
+    }
+  ],
+  "audio": [
+    {"kind": "voiceover", "source": "vo.mp3", "start": 0.00, "duration": 6.94, "volume": 1.0},
+    {"kind": "music", "source": "music/kitchen_light.mp3", "start": 0.00, "duration": 6.94, "volume": 0.12}
+  ],
+  "text": [
+    {"content": "DRY AGAIN?", "start": 0.20, "duration": 2.40, "style": "bold"}
+  ],
+  "subtitles": null
+}

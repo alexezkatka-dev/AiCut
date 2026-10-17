@@ -1,0 +1,36 @@
+# Copy to config.yaml and edit. Paths may contain spaces and Cyrillic.
+
+capcut:
+  # Default CapCut International drafts folder on Windows.
+  drafts_dir: "C:/Users/YOUR_NAME/AppData/Local/CapCut/User Data/Projects/com.lveditor.draft"
+  draft_prefix: "AE_"
+
+paths:
+  work_dir: "work"
+
+video:
+  width: 1920
+  height: 1080
+  fps: 30
+
+models:
+  whisper: "small.en"        # "medium.en" if a GPU is available
+  whisper_device: "auto"     # auto | cpu | cuda
+  clip: "ViT-B-16-SigLIP"    # open_clip model name
+  clip_pretrained: "webli"
+
+index:
+  sample_every_sec: 0.5
+  sample_width: 384
+
+matcher:
+  weights: {similarity: 0.55, order: 0.20, quality: 0.15, duration: 0.10}
+  review_threshold: 0.35
+  review_margin: 0.03
+  max_overlap: 0.30
+  min_speed: 0.8
+
+preview:
+  height: 540
+
+profile: "food_long"
