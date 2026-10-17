@@ -1,5 +1,9 @@
 """SigLIP image/text embeddings via open_clip, on the NVIDIA GPU when available. Runs locally, no API."""
 
+import logging
+import os
+import warnings
+
 import numpy as np
 
 
@@ -7,6 +11,10 @@ class Embedder:
     """Loads the model on creation (slow: ~10-20 s); torch is imported only here."""
 
     def __init__(self, model: str, pretrained: str, device: str = "auto"):
+        # Hugging Face download notices (no token, no symlinks on Windows) are harmless; keep the window readable.
+        os.environ.setdefault("HF_HUB_DISABLE_SYMLINKS_WARNING", "1")
+        logging.getLogger("huggingface_hub").setLevel(logging.ERROR)
+        warnings.filterwarnings("ignore", module="huggingface_hub")
         import open_clip
         import torch
 
