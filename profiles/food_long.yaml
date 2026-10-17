@@ -12,14 +12,16 @@ text_styles:
   bold:
     color: "#FFFFFF"
     stroke_color: "#000000"
-    stroke_width: 0.08
-    size: 9
-    position_y: -0.55      # lower third
+    stroke_width: 40       # CapCut units, 0-100
+    size: 9                # CapCut font size
+    bold: true
+    position_y: -0.55      # lower third (units of half the frame height, up is +)
   accent:
     color: "#FFD400"
     stroke_color: "#000000"
-    stroke_width: 0.08
+    stroke_width: 40
     size: 9
+    bold: true
     position_y: -0.55
 
 music:

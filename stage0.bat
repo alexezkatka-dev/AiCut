@@ -2,8 +2,8 @@
 rem Stage 0: builds a test CapCut draft. Optional argument: CapCut drafts folder.
 setlocal
 cd /d "%~dp0"
-rem winget puts ffmpeg here; a fresh install may not be on PATH until re-login.
-set "PATH=%PATH%;%LOCALAPPDATA%\Microsoft\WinGet\Links;%ProgramFiles%\WinGet\Links"
+rem Reload PATH from the registry: winget may have added a folder since this window opened.
+for /f "usebackq delims=" %%P in (`powershell -NoProfile -Command "[Environment]::GetEnvironmentVariable('Path','Machine')+';'+[Environment]::GetEnvironmentVariable('Path','User')"`) do set "PATH=%%P;%LOCALAPPDATA%\Microsoft\WinGet\Links;%ProgramFiles%\WinGet\Links"
 
 if not exist ".venv\Scripts\python.exe" (
     echo [ERROR] Run install.bat first.

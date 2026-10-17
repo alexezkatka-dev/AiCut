@@ -1,8 +1,8 @@
 # Copy to config.yaml and edit. Paths may contain spaces and Cyrillic.
 
 capcut:
-  # Default CapCut International drafts folder on Windows.
-  drafts_dir: "C:/Users/YOUR_NAME/AppData/Local/CapCut/User Data/Projects/com.lveditor.draft"
+  # Empty = standard CapCut folder (%LOCALAPPDATA%/CapCut/User Data/Projects/com.lveditor.draft).
+  drafts_dir: ""
   draft_prefix: "AE_"
 
 paths:

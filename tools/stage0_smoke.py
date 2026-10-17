@@ -6,7 +6,6 @@ Messages are in Russian: the user reads them.
 
 import argparse
 import json
-import os
 from datetime import datetime
 from pathlib import Path
 
@@ -14,6 +13,8 @@ import pycapcut as cc
 from pycapcut import KeyframeProperty as KP
 from pycapcut import trange_seconds as ts
 
+from autoedit.build_capcut import unique_draft_name
+from autoedit.config import default_drafts_dir
 from tests.make_samples import make_samples
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -22,22 +23,6 @@ MEDIA_DIR = ROOT / "work" / "stage0" / "media"
 # (media key, src_in, duration, zoom_to); zoom always starts at 1.00.
 CLIPS = [("clip1", 1.0, 3.0, 1.12), ("clip2", 2.5, 3.0, 1.06)]
 TITLE = ("DRY AGAIN?", 0.0, 2.0)  # text, start, duration
-
-
-def default_drafts_dir() -> Path | None:
-    local = os.environ.get("LOCALAPPDATA")
-    if not local:
-        return None
-    return Path(local) / "CapCut" / "User Data" / "Projects" / "com.lveditor.draft"
-
-
-def unique_draft_name(drafts_dir: Path, project: str, now: datetime) -> str:
-    """AE_<YYYYMMDD-HHMM>_<project>, with a numeric suffix if taken. Never reuses a name."""
-    base = f"AE_{now:%Y%m%d-%H%M}_{project}"
-    name, n = base, 2
-    while (drafts_dir / name).exists():
-        name, n = f"{base}_{n}", n + 1
-    return name
 
 
 def build_smoke_draft(drafts_dir: Path, media: dict[str, Path], now: datetime | None = None) -> Path:

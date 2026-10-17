@@ -1,10 +1,25 @@
 # Pinned for Python 3.11 on Windows (all have win_amd64 wheels).
-# Stage 0: CapCut draft check. Stage 1 adds the rest of the stack.
 pycapcut==0.0.4  # do not upgrade: 0.1.0 removes add_track (SPEC §6)
 imageio==2.38.1
 numpy==2.4.6
 pillow==13.0.0
 pymediainfo==7.0.1
+uiautomation==2.0.29  # pycapcut, Windows only
+comtypes==1.4.17
+
+# Plan, config, CLI (stage 1)
+pydantic==2.14.1
+pydantic_core==2.50.1
+annotated-types==0.8.0
+typing-inspection==0.4.4
+typing_extensions==4.16.0
+PyYAML==6.0.3
+typer==0.27.3
+annotated-doc==0.0.5
+rich==15.0.0
+markdown-it-py==4.2.0
+mdurl==0.1.2
+shellingham==1.5.4
 
 # Tests
 pytest==9.1.1

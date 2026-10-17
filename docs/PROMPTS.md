@@ -8,7 +8,8 @@
 
 ## Подготовка (один раз, ~20 минут)
 
-1. **Python 3.11** — скачай с python.org. При установке поставь галочку «Add python.exe to PATH».
+1. **Python 3.11** — ставить заранее не обязательно: `install.bat` сам найдёт его или предложит поставить через winget
+   (нажать 1). Большая кнопка на python.org ставит другую версию — она не подойдёт.
 2. **FFmpeg и Git** — открой PowerShell и выполни:
    ```
    winget install Gyan.FFmpeg
@@ -60,7 +61,8 @@ config.example.yaml → config.yaml, Pydantic-модели плана (autoedit/
 Подставь вместо исходников тестовые клипы. Сначала план.
 ```
 
-**Что проверить.** Черновик открывается в CapCut, а `preview.mp4` совпадает с ним по склейкам.
+**Что проверить.** `git pull`, `install.bat`, затем `example.bat`. Черновик открывается в CapCut,
+а `work\example\preview.mp4` совпадает с ним по склейкам.
 
 ---
 
