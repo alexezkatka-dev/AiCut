@@ -15,7 +15,11 @@
    winget install Git.Git
    ```
    Потом закрой и снова открой PowerShell.
-3. Распакуй архив проекта в `C:\AutoEditor`. Лучше без кириллицы и пробелов в пути.
+3. Скачай проект из GitHub в `C:\AutoEditor` (путь лучше без кириллицы и пробелов). В PowerShell:
+   ```
+   git clone -b claude/admiring-rubin-1gaebd https://github.com/alexezkatka-dev/AiCut C:\AutoEditor
+   ```
+   Свежие изменения потом забираются командой `git pull` в этой папке.
 4. В PowerShell выполни:
    ```
    cd C:\AutoEditor
